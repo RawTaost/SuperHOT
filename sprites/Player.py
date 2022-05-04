@@ -5,6 +5,9 @@ class Player:
     def __init__(self, startX, startY, startAngle, health, weapon):
         self.x = startX
         self.y = startY
+        self.vx = 0
+        self.vy = 0
+        self.speed = 0.2
         self.angle = startAngle
         self.health = health
         self.weapon = weapon

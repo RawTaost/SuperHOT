@@ -18,6 +18,7 @@ while m_running:
         if event.type == pygame.QUIT:
             m_running = False
     ##########
+    m_sim.update()
     m_draw.periodic(m_sim.getPlayer())
     ##########
     pygame.display.flip()

@@ -1,4 +1,5 @@
 import math
+import pygame
 from sprites.Player import Player
 from items.Pistol import Pistol
 
@@ -8,6 +9,33 @@ class Sim:
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
         self.player = Player(100, 100, math.pi / 2, 1, Pistol(12))
+
+    def movePlayer(self):
+        #Get Direction
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]:
+            self.player.vy = -self.player.speed
+        elif keys[pygame.K_s]:
+            self.player.vy = self.player.speed
+        else:
+            self.player.vy = 0
+
+        if keys[pygame.K_d]:
+            self.player.vx = self.player.speed
+        elif keys[pygame.K_a]:
+            self.player.vx = -self.player.speed
+        else:
+            self.player.vx = 0
+
+        #Get Angle
+        
+
+        #Move
+        self.player.x += self.player.vx
+        self.player.y += self.player.vy
+
+    def update(self):
+        self.movePlayer()
 
     def getPlayer(self):
         return self.player
