@@ -8,6 +8,8 @@ class Sim:
     def __init__(self, screenWidth, screenHeight):
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
+        self.cursorX = pygame.mouse.get_pos()[0]
+        self.cursorY = pygame.mouse.get_pos()[1]
         self.player = Player(100, 100, math.pi / 2, 1, Pistol(12))
 
     def movePlayer(self):
@@ -28,7 +30,10 @@ class Sim:
             self.player.vx = 0
 
         #Get Angle
-        
+        self.cursorX = pygame.mouse.get_pos()[0]
+        self.cursorY = pygame.mouse.get_pos()[1]
+
+        self.player.angle = -math.atan2(self.cursorY - self.player.y, self.cursorX - self.player.x) - math.pi / 2
 
         #Move
         self.player.x += self.player.vx
