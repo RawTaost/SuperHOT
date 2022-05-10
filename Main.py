@@ -19,7 +19,7 @@ while m_running:
             m_running = False
     ##########
     m_sim.update()
-    m_draw.periodic(m_sim.getPlayer())
+    m_draw.periodic(m_sim.getPlayer(), m_sim.getProjectiles)
     ##########
     pygame.display.flip()
 pygame.quit()

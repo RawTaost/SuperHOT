@@ -1,6 +1,7 @@
 import math
 import pygame
 from sprites.Player import Player
+from sprites.Bullet import Bullet
 from items.Pistol import Pistol
 
 class Sim:
@@ -11,6 +12,31 @@ class Sim:
         self.cursorX = pygame.mouse.get_pos()[0]
         self.cursorY = pygame.mouse.get_pos()[1]
         self.player = Player(100, 100, math.pi / 2, 1, Pistol(12))
+        self.projectiles = []
+
+    def update(self):
+        self.movePlayer()
+        self.moveProjectiles()
+
+    def shoot(self):
+        self.player.weapon.fire()
+        self.projectiles.append(Bullet(self.player.x, self.player.y, self.player.angle))
+
+    def throwWeapon(self):
+        pass
+
+    def attack(self):
+        if self.player.weapon == None:
+            pass
+        else:
+            if self.player.weapon.hasAmmo():
+                self.shoot()
+            else:
+                self.throwWeapon()
+
+    def moveProjectiles(self):
+        for p in self.projectiles:
+            p.move()
 
     def movePlayer(self):
         #Get Direction
@@ -39,8 +65,8 @@ class Sim:
         self.player.x += self.player.vx
         self.player.y += self.player.vy
 
-    def update(self):
-        self.movePlayer()
-
     def getPlayer(self):
         return self.player
+
+    def getProjectiles(self):
+        return self.projectiles
