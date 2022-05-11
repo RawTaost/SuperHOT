@@ -17,9 +17,11 @@ while m_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             m_running = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            m_sim.attack()
     ##########
     m_sim.update()
-    m_draw.periodic(m_sim.getPlayer(), m_sim.getProjectiles)
+    m_draw.periodic(m_sim.getPlayer(), m_sim.getProjectiles())
     ##########
     pygame.display.flip()
 pygame.quit()

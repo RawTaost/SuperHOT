@@ -17,10 +17,12 @@ class Draw:
     def drawBackground(self):
         self.screen.fill(self.backgroundColor)
 
+    
+
     def drawProjectiles(self, projectiles):
         for p in projectiles:
             img = self.pygame.image.load(p.image).convert_alpha()
-            rotImg = self.pygame.transform.rotate(img, (p.angle * 180) / math.pi)
+            rotImg = self.pygame.transform.rotate(img, ((-p.angle - math.pi / 2) * 180) / math.pi)
             rect = rotImg.get_rect(center = (p.x, p.y))
             self.screen.blit(rotImg, rect)
 

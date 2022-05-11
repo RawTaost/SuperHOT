@@ -20,7 +20,7 @@ class Sim:
 
     def shoot(self):
         self.player.weapon.fire()
-        self.projectiles.append(Bullet(self.player.x, self.player.y, self.player.angle))
+        self.projectiles.append(Bullet(self.player.x, self.player.y, -self.player.angle - math.pi / 2))
 
     def throwWeapon(self):
         pass
@@ -36,7 +36,10 @@ class Sim:
 
     def moveProjectiles(self):
         for p in self.projectiles:
-            p.move()
+            if p.x < 0 or p.x > self.screenWidth or p.y < 0 or p.y > self.screenHeight:
+                self.projectiles.remove(p)
+            else:
+                p.move()
 
     def movePlayer(self):
         #Get Direction
@@ -70,3 +73,4 @@ class Sim:
 
     def getProjectiles(self):
         return self.projectiles
+        
