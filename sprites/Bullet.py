@@ -8,6 +8,8 @@ class Bullet:
         self.angle = angle
         self.velocity = 5
         self.image = "textures/Bullet.png"
+        self.rotImg = None
+        self.rect = None
 
     def move(self):
         self.x += self.velocity * math.cos(self.angle)

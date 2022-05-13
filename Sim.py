@@ -3,6 +3,7 @@ import pygame
 from sprites.Player import Player
 from sprites.Bullet import Bullet
 from items.Pistol import Pistol
+from sprites.Enemy import Enemy
 
 class Sim:
 
@@ -13,9 +14,14 @@ class Sim:
         self.cursorY = pygame.mouse.get_pos()[1]
         self.player = Player(100, 100, math.pi / 2, 1, Pistol(12))
         self.projectiles = []
+        self.enemies = []
+
+    def init(self):
+        self.enemies.append(Enemy(500, 500, math.pi / 2, 1, Pistol(12)))
 
     def update(self):
         self.movePlayer()
+        self.moveEnemies()
         self.moveProjectiles()
 
     def shoot(self):
@@ -40,6 +46,11 @@ class Sim:
                 self.projectiles.remove(p)
             else:
                 p.move()
+
+    def moveEnemies(self):
+        for e in self.enemies:
+            e.x += e.vx
+            e.y += e.vy
 
     def movePlayer(self):
         #Get Direction
@@ -73,4 +84,7 @@ class Sim:
 
     def getProjectiles(self):
         return self.projectiles
+
+    def getEnemies(self):
+        return self.enemies
         

@@ -11,6 +11,7 @@ pygame.display.set_caption("SuperHOT")
 
 m_draw = Draw(pygame, m_screen, m_screenWidth, m_screenHeight)
 m_sim = Sim(m_screenWidth, m_screenHeight)
+m_sim.init()
 
 m_running = True
 while m_running:
@@ -21,7 +22,7 @@ while m_running:
             m_sim.attack()
     ##########
     m_sim.update()
-    m_draw.periodic(m_sim.getPlayer(), m_sim.getProjectiles())
+    m_draw.periodic(m_sim.getPlayer(), m_sim.getProjectiles(), m_sim.getEnemies())
     ##########
     pygame.display.flip()
 pygame.quit()
