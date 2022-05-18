@@ -21,8 +21,8 @@ class Draw:
     def drawEnemies(self, enemies):
         for e in enemies:
             if e.rotImg == None:
-                img = self.pygame.image.load(e.image).convert_alpha()
-                e.rotImg = self.pygame.transform.rotate(img, ((-e.angle - math.pi / 2) * 180) / math.pi)
+                e.loadedImage = self.pygame.image.load(e.image).convert_alpha()
+            e.rotImg = self.pygame.transform.rotate(e.loadedImage, ((-e.angle - math.pi / 2) * 180) / math.pi)
             e.rect = e.rotImg.get_rect(center = (e.x, e.y))
             self.screen.blit(e.rotImg, e.rect)
 
@@ -36,7 +36,8 @@ class Draw:
             self.screen.blit(p.rotImg, p.rect)
 
     def drawPlayer(self, player):
-        img = self.pygame.image.load(player.image).convert_alpha()
-        rotImg = self.pygame.transform.rotate(img, (player.angle * 180) / math.pi)
+        if player.loadedImage == None:
+            player.loadedImage = self.pygame.image.load(player.image).convert_alpha()
+        rotImg = self.pygame.transform.rotate(player.loadedImage, (player.angle * 180) / math.pi)
         rect = rotImg.get_rect(center = (player.x, player.y))
         self.screen.blit(rotImg, rect)

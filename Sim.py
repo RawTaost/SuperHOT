@@ -24,21 +24,21 @@ class Sim:
         self.moveEnemies()
         self.moveProjectiles()
 
-    def shoot(self):
-        self.player.weapon.fire()
-        self.projectiles.append(Bullet(self.player.x, self.player.y, -self.player.angle - math.pi / 2))
+    def shoot(self, character):
+        character.weapon.fire()
+        self.projectiles.append(Bullet(character.x, character.y, -character.angle - math.pi / 2))
 
-    def throwWeapon(self):
+    def throwWeapon(self, character):
         pass
 
-    def attack(self):
-        if self.player.weapon == None:
+    def attack(self, character):
+        if character.weapon == None:
             pass
         else:
-            if self.player.weapon.hasAmmo():
-                self.shoot()
+            if character.weapon.hasAmmo():
+                self.shoot(character)
             else:
-                self.throwWeapon()
+                self.throwWeapon(character)
 
     def moveProjectiles(self):
         for p in self.projectiles:
@@ -51,6 +51,7 @@ class Sim:
         for e in self.enemies:
             e.x += e.vx
             e.y += e.vy
+            e.updateState((self.player.x, self.player.y))
 
     def movePlayer(self):
         #Get Direction

@@ -15,3 +15,4 @@ class Player:
             self.image = "textures/Player-Pistol.png"
         else:
             self.image = "textures/Player-Base.png"
+        self.loadedImage = None

@@ -1,4 +1,6 @@
 import math
+from sys import get_asyncgen_hooks
+from webbrowser import get
 
 class Enemy:
 
@@ -19,3 +21,20 @@ class Enemy:
             self.image = "textures/Enemy-Pistol.png"
         else:
             self.image = "textures/Enemy-Base.png"
+        self.loadedImg = None
+        self.state = "patroling"
+    
+    def updateState(self, p):
+        if self.state == "alerted":
+            if abs(self.getAngleToPlayer(p) - self.angle) < 0.2:
+                return "attack"
+            else:
+                self.angle += 0.05
+        elif self.state == "patroling":
+            self.angle += 0.01
+            if abs(self.getAngleToPlayer(p) - self.angle) < 0.785:
+                self.state = "alerted"
+        return None
+
+    def getAngleToPlayer(self, p):
+        return math.atan2(p[1] - self.y, p[0] - self.x)

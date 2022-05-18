@@ -13,5 +13,8 @@ class Collisions:
     def projectileEnemy(self, projectiles, enemies):
         for e in enemies:
             for p in projectiles:
-                if Tools.isTouchingCharacter(e.x, e.y, p.x, p.y, e.angle):
-                    print("he dead")
+                if e.rect != None or p.rect != None:
+                    if e.rect.colliderect(p.rect):
+                        enemies.remove(e)
+                        projectiles.remove(p)
+                    
