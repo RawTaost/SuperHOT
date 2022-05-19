@@ -26,7 +26,9 @@ class Sim:
 
     def shoot(self, character):
         character.weapon.fire()
-        self.projectiles.append(Bullet(character.x, character.y, -character.angle - math.pi / 2))
+        direction = -character.angle - math.pi / 2
+        r = 68
+        self.projectiles.append(Bullet(character.x + r * math.cos(character.angle), character.y + r * math.sin(character.angle), character.angle))
 
     def throwWeapon(self, character):
         pass
@@ -51,7 +53,8 @@ class Sim:
         for e in self.enemies:
             e.x += e.vx
             e.y += e.vy
-            e.updateState((self.player.x, self.player.y))
+            if e.updateState((self.player.x, self.player.y)) == "attack":
+                self.attack(e)
 
     def movePlayer(self):
         #Get Direction
@@ -74,7 +77,7 @@ class Sim:
         self.cursorX = pygame.mouse.get_pos()[0]
         self.cursorY = pygame.mouse.get_pos()[1]
 
-        self.player.angle = -math.atan2(self.cursorY - self.player.y, self.cursorX - self.player.x) - math.pi / 2
+        self.player.angle = math.atan2(self.cursorY - self.player.y, self.cursorX - self.player.x)
 
         #Move
         self.player.x += self.player.vx

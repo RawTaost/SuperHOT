@@ -38,6 +38,6 @@ class Draw:
     def drawPlayer(self, player):
         if player.loadedImage == None:
             player.loadedImage = self.pygame.image.load(player.image).convert_alpha()
-        rotImg = self.pygame.transform.rotate(player.loadedImage, (player.angle * 180) / math.pi)
+        rotImg = self.pygame.transform.rotate(player.loadedImage, ((-player.angle - math.pi / 2) * 180) / math.pi)
         rect = rotImg.get_rect(center = (player.x, player.y))
         self.screen.blit(rotImg, rect)

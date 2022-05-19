@@ -1,6 +1,5 @@
 import math
-from sys import get_asyncgen_hooks
-from webbrowser import get
+import Tools
 
 class Enemy:
 
@@ -10,6 +9,7 @@ class Enemy:
         self.vx = 0
         self.vy = 0
         self.speed = 0.3
+        self.turnSpeed = 0.025
         self.angle = startAngle
         self.health = health
         self.weapon = weapon
@@ -21,20 +21,33 @@ class Enemy:
             self.image = "textures/Enemy-Pistol.png"
         else:
             self.image = "textures/Enemy-Base.png"
+        self.weaponCooldown = 150
+        self.cooldown = 0
         self.loadedImg = None
-        self.state = "patroling"
+        self.state = "ignorant"
     
     def updateState(self, p):
-        if self.state == "alerted":
-            if abs(self.getAngleToPlayer(p) - self.angle) < 0.2:
-                return "attack"
-            else:
-                self.angle += 0.05
-        elif self.state == "patroling":
-            self.angle += 0.01
-            if abs(self.getAngleToPlayer(p) - self.angle) < 0.785:
+        if self.state == "ignorant":
+            if self.canSeePlayer(p):
                 self.state = "alerted"
+        elif self.state == "alerted":
+            if self.getAngleToPlayer(p) <= 0.2:
+                if self.cooldown == 0:
+                    self.cooldown = self.weaponCooldown
+                    return "attack"
+                else: self.cooldown -= 1
+            else:
+                self.angle += self.turnSpeed * self.getDirectionToPlayer(p)
         return None
 
-    def getAngleToPlayer(self, p):
+    def getPlayerAngle(self, p):
         return math.atan2(p[1] - self.y, p[0] - self.x)
+
+    def getAngleToPlayer(self, p):
+        return Tools.getShortestAngle(self.angle, self.getPlayerAngle(p))[0]
+
+    def canSeePlayer(self, p):
+        return Tools.getShortestAngle(self.angle, self.getPlayerAngle(p))[0] < math.pi / 4
+
+    def getDirectionToPlayer(self, p):
+        return Tools.getShortestAngle(self.angle, self.getPlayerAngle(p))[1]
