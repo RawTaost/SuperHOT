@@ -7,6 +7,7 @@ class Bullet:
         self.y = y
         self.angle = angle
         self.velocity = 5
+        self.angularVelocity = 0
         self.image = "textures/Bullet.png"
         self.rotImg = None
         self.rect = None
