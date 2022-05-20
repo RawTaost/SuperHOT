@@ -15,6 +15,9 @@ class Collisions:
             for p in projectiles:
                 if e.rect != None or p.rect != None and p.state == "projectile":
                     if e.rect.colliderect(p.rect):
-                        enemies.remove(e)
-                        projectiles.remove(p)
+                        try:
+                            enemies.remove(e)
+                            projectiles.remove(p)
+                        except:
+                            pass
                     

@@ -15,6 +15,7 @@ class Pistol:
         self.rotImg = None
         self.rect = None
         self.state = "projectile"
+        self.ammo = 0
 
     def move(self):
         self.x += self.velocity * math.cos(self.moveAngle)

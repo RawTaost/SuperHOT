@@ -1,5 +1,6 @@
 import math
 import pygame
+import random
 from sprites.Player import Player
 from sprites.Bullet import Bullet
 from items.Pistol import Pistol
@@ -13,13 +14,19 @@ class Sim:
         self.screenHeight = screenHeight
         self.cursorX = pygame.mouse.get_pos()[0]
         self.cursorY = pygame.mouse.get_pos()[1]
-        self.player = Player(100, 100, math.pi / 2, Pistol(12))
+        self.player = Player(100, 600, math.pi / 2, Pistol(12))
         self.projectiles = []
         self.enemies = []
+        self.enemyCount = 30
 
     def init(self):
-        self.enemies.append(Enemy(500, 500, math.pi / 2, Pistol(12)))
-        self.enemies.append(Enemy(1000, 200, math.pi, Pistol(12)))
+        # self.enemies.append(Enemy(500, 500, math.pi / 2, Pistol(12)))
+        # self.enemies.append(Enemy(1000, 200, math.pi, Pistol(12)))
+        for i in range(self.enemyCount):
+            x = random.randrange(500, self.screenWidth - 30, 10)
+            y = random.randrange(30, self.screenHeight - 30, 10)
+            angle = (random.randrange(0, 359, 1) * math.pi) / 180
+            self.enemies.append(Enemy(x, y, angle, Pistol(12)))
 
     def update(self):
         self.movePlayer()

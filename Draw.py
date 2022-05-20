@@ -8,15 +8,31 @@ class Draw:
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
         self.backgroundColor = (156, 156, 156)
+        self.font = self.pygame.font.SysFont("consolas", 50)
+        # print(self.pygame.font.get_fonts())
 
     def periodic(self, player, projectiles, enemies):
         self.drawBackground()
         self.drawProjectiles(projectiles)
         self.drawPlayer(player)
         self.drawEnemies(enemies)
+        self.drawInfoPanel(player, enemies)
 
     def drawBackground(self):
         self.screen.fill(self.backgroundColor)
+
+    def drawInfoPanel(self, player, enemies):
+        self.pygame.draw.rect(self.screen, (100, 100, 100), (0, 0, 340, 130))
+        if player.weapon == None:
+            ammoInfo = self.font.render("No Weapon", True, (31, 255, 65))
+        else:
+            if player.weapon.ammo == 0:
+                ammoInfo = self.font.render("No Ammo!", True, (31, 255, 65))
+            else:
+                ammoInfo = self.font.render(f"Ammo: {player.weapon.ammo}", True, (31, 255, 65))
+        self.screen.blit(ammoInfo, (10, 10))
+        enemyInfo = self.font.render(f"{len(enemies)} Enemie(s)", True, (31, 255, 65))
+        self.screen.blit(enemyInfo, (10, 70))
 
     def drawEnemies(self, enemies):
         for e in enemies:
