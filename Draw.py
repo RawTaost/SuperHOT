@@ -11,8 +11,8 @@ class Draw:
 
     def periodic(self, player, projectiles, enemies):
         self.drawBackground()
-        self.drawPlayer(player)
         self.drawProjectiles(projectiles)
+        self.drawPlayer(player)
         self.drawEnemies(enemies)
 
     def drawBackground(self):
@@ -20,7 +20,7 @@ class Draw:
 
     def drawEnemies(self, enemies):
         for e in enemies:
-            if e.rotImg == None:
+            if e.loadedImage == None:
                 e.loadedImage = self.pygame.image.load(e.image).convert_alpha()
             e.rotImg = self.pygame.transform.rotate(e.loadedImage, ((-e.angle - math.pi / 2) * 180) / math.pi)
             e.rect = e.rotImg.get_rect(center = (e.x, e.y))
@@ -30,8 +30,8 @@ class Draw:
     def drawProjectiles(self, projectiles):
         for p in projectiles:
             if p.rotImg == None:
-                img = self.pygame.image.load(p.image).convert_alpha()
-                p.rotImg = self.pygame.transform.rotate(img, ((-p.angle - math.pi / 2) * 180) / math.pi)
+                p.loadedImage = self.pygame.image.load(p.image).convert_alpha()
+            p.rotImg = self.pygame.transform.rotate(p.loadedImage, ((-p.angle - math.pi / 2) * 180) / math.pi)
             p.rect = p.rotImg.get_rect(center = (p.x, p.y))
             self.screen.blit(p.rotImg, p.rect)
 

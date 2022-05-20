@@ -3,7 +3,7 @@ import Tools
 
 class Enemy:
 
-    def __init__(self, startX, startY, startAngle, health, weapon):
+    def __init__(self, startX, startY, startAngle, weapon):
         self.x = startX
         self.y = startY
         self.vx = 0
@@ -11,20 +11,26 @@ class Enemy:
         self.speed = 0.3
         self.turnSpeed = 0.025
         self.angle = startAngle
-        self.health = health
         self.weapon = weapon
         self.rotImg = None
         self.rect = None
         self.width = 64
         self.height = 38
-        if self.weapon.type == "pistol":
-            self.image = "textures/Enemy-Pistol.png"
-        else:
+        if self.weapon == None:
             self.image = "textures/Enemy-Base.png"
+        elif self.weapon.type == "pistol":
+            self.image = "textures/Enemy-Pistol.png"
         self.weaponCooldown = 150
         self.cooldown = 0
-        self.loadedImg = None
+        self.loadedImage = None
         self.state = "ignorant"
+
+    def updateImage(self):
+        self.loadedImage = None
+        if self.weapon == None:
+            self.image = "textures/Enemy-Base.png"
+        elif self.weapon.type == "pistol":
+            self.image = "textures/Enemy-Pistol.png"
     
     def updateState(self, p):
         if self.state == "ignorant":

@@ -13,7 +13,7 @@ class Collisions:
     def projectileEnemy(self, projectiles, enemies):
         for e in enemies:
             for p in projectiles:
-                if e.rect != None or p.rect != None:
+                if e.rect != None or p.rect != None and p.state == "projectile":
                     if e.rect.colliderect(p.rect):
                         enemies.remove(e)
                         projectiles.remove(p)

@@ -4,6 +4,7 @@ from sprites.Player import Player
 from sprites.Bullet import Bullet
 from items.Pistol import Pistol
 from sprites.Enemy import Enemy
+from sprites.Pistol import Pistol as PistolObject
 
 class Sim:
 
@@ -12,12 +13,13 @@ class Sim:
         self.screenHeight = screenHeight
         self.cursorX = pygame.mouse.get_pos()[0]
         self.cursorY = pygame.mouse.get_pos()[1]
-        self.player = Player(100, 100, math.pi / 2, 1, Pistol(12))
+        self.player = Player(100, 100, math.pi / 2, Pistol(12))
         self.projectiles = []
         self.enemies = []
 
     def init(self):
-        self.enemies.append(Enemy(500, 500, math.pi / 2, 1, Pistol(12)))
+        self.enemies.append(Enemy(500, 500, math.pi / 2, Pistol(12)))
+        self.enemies.append(Enemy(1000, 200, math.pi, Pistol(12)))
 
     def update(self):
         self.movePlayer()
@@ -31,7 +33,11 @@ class Sim:
         self.projectiles.append(Bullet(character.x + r * math.cos(character.angle), character.y + r * math.sin(character.angle), character.angle))
 
     def throwWeapon(self, character):
-        pass
+        r = 68
+        if character.weapon.type == "pistol":
+            self.projectiles.append(PistolObject(character.x + r * math.cos(character.angle), character.y + r * math.sin(character.angle), character.angle, 0.05))
+        character.weapon = None
+        character.updateImage()
 
     def attack(self, character):
         if character.weapon == None:
